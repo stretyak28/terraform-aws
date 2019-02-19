@@ -3,11 +3,10 @@ resource "aws_vpc" "main" {
   instance_tenancy = "default"
 
   tags = {
-    Name = "My-VPC"
+    Name  = "My-VPC"
     Owner = "Serg"
   }
 }
-
 
 /*
 data "aws_availability_zones" "available" {
@@ -20,43 +19,45 @@ data "aws_availability_zones" "available" {
 resource "aws_subnet" "us-east-2a-public" {
   vpc_id     = "${aws_vpc.main.id}"
   cidr_block = "${var.public_subnet_cidr}"
-#  availability_zone = "${data.aws_availability_zones.available.names[0]}"
-  availability_zone = "us-east-2a"
+
+  #  availability_zone = "${data.aws_availability_zones.available.names[0]}"
+  availability_zone       = "us-east-2a"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "My-Public-Subnet-A"
+    Name  = "My-Public-Subnet-A"
     Owner = "Serg"
   }
 }
 
 resource "aws_route_table" "us-east-2a-public" {
-    vpc_id = "${aws_vpc.main.id}"
+  vpc_id = "${aws_vpc.main.id}"
 
-    route {
-        cidr_block = "0.0.0.0/0"
-        gateway_id = "${aws_internet_gateway.gw.id}"
-    }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway.gw.id}"
+  }
 
-    tags {
-        Name = "My-Route Table Public"
-        Owner = "Serg"
-    }
+  tags {
+    Name  = "My-Route Table Public"
+    Owner = "Serg"
+  }
 }
 
 resource "aws_route_table_association" "us-east-2a-public" {
-    subnet_id = "${aws_subnet.us-east-2a-public.id}"
-    route_table_id = "${aws_route_table.us-east-2a-public.id}"
+  subnet_id      = "${aws_subnet.us-east-2a-public.id}"
+  route_table_id = "${aws_route_table.us-east-2a-public.id}"
 }
 
 resource "aws_subnet" "us-east-2b-privat" {
-  vpc_id            = "${aws_vpc.main.id}"
-  cidr_block        = "${var.private_subnet_cidr}"
-#  availability_zone = "${data.aws_availability_zones.available.names[1]}"
+  vpc_id     = "${aws_vpc.main.id}"
+  cidr_block = "${var.private_subnet_cidr}"
+
+  #  availability_zone = "${data.aws_availability_zones.available.names[1]}"
   availability_zone = "us-east-2b"
 
   tags = {
-    Name = "My-Privat-Subnet-A"
+    Name  = "My-Privat-Subnet-A"
     Owner = "Serg"
   }
 }
@@ -66,7 +67,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.main.id}"
 
   tags = {
-    Name = "My-Internet-Gateway"
+    Name  = "My-Internet-Gateway"
     Owner = "Serg"
   }
 }
