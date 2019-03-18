@@ -3,6 +3,7 @@
 
 variable "aws_region" {
   description = "EC2 Region for the VPC"
+  default     = "us-east-2"
 }
 
 
@@ -20,17 +21,11 @@ variable "amis" {
 }
 */
 
-variable "vpc_cidr" {
-  description = "CIDR for the whole VPC"
-}
+variable "vpc_cidr" {}
 
-variable "public_subnet_cidr" {
-  description = "CIDR for the Public Subnet"
-}
+variable "public_subnet_cidr" {}
 
-variable "private_subnet_cidr" {
-  description = "CIDR for the Private Subnet"
-}
+variable "private_subnet_cidr" {}
 
 /*
 variable "subnet_cidr" {
